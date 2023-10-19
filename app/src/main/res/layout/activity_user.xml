@@ -1,27 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".UserActivity">
+    android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/usernameTextView"
+        android:id="@+id/textViewUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"/>
 
     <Button
-        android:id="@+id/startButton"
+        android:id="@+id/buttonStartService"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Start Service"
-        android:layout_below="@id/usernameTextView" />
+        android:layout_below="@+id/textViewUsername"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"/>
 
     <Button
-        android:id="@+id/stopButton"
+        android:id="@+id/buttonStopService"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Stop Service"
-        android:layout_below="@id/startButton" />
+        android:layout_below="@+id/buttonStartService"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"/>
+
+    <Button
+        android:id="@+id/buttonReadData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Read db"
+        android:layout_below="@+id/buttonStopService"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"/>
 
 </RelativeLayout>

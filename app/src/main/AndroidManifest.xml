@@ -16,7 +16,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".UserActivity" android:exported="false"></activity>
-        <service android:name=".CountingService"></service>
+        <service android:name=".MyService"></service>
     </application>
 
 </manifest>

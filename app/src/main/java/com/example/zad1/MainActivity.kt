@@ -1,4 +1,4 @@
-package com.example.zad1;
+package com.example.zad1
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,22 +8,16 @@ import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var usernameEditText: EditText
-    private lateinit var submitButton: Button
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        usernameEditText = findViewById(R.id.usernameEditText)
-        submitButton = findViewById(R.id.submitButton)
+        val buttonSubmit: Button = findViewById(R.id.buttonSubmit)
+        val editTextUserInput: EditText = findViewById(R.id.editTextUserInput)
 
-        submitButton.setOnClickListener {
-            val username = usernameEditText.text.toString()
-
-            val intent = Intent(this, UserActivity::class.java).apply {
-                putExtra("username", username)
-            }
+        buttonSubmit.setOnClickListener {
+            val intent = Intent(this, UserActivity::class.java)
+            intent.putExtra("username", editTextUserInput.text.toString())
             startActivity(intent)
         }
     }
