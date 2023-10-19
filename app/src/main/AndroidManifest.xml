@@ -17,6 +17,10 @@
         </activity>
         <activity android:name=".UserActivity" android:exported="false"></activity>
         <service android:name=".MyService"></service>
+        <provider
+            android:name=".NumberProvider"
+            android:authorities="com.example.zad1.numberprovider"
+            android:exported="true"/>
     </application>
 
 </manifest>
