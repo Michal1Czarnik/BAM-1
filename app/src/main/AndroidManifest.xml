@@ -19,8 +19,11 @@
         <service android:name=".MyService"></service>
         <provider
             android:name=".NumberProvider"
-            android:authorities="com.example.zad1.numberprovider"
-            android:exported="true"/>
+            android:authorities="com.example.zad1.provider"
+            android:enabled="true"
+            android:exported="true" />
     </application>
+
+<!--    <permission android:name="com.example.zad1.READ_PIN" />-->
 
 </manifest>

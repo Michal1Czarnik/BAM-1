@@ -2,18 +2,32 @@ package com.example.zad1
 
 import android.content.ContentProvider
 import android.content.ContentValues
+import android.content.UriMatcher
 import android.database.Cursor
 import android.database.MatrixCursor
 import android.net.Uri
+import android.util.Log
 import androidx.room.Room
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import android.content.Context
 
 class NumberProvider : ContentProvider() {
+    private lateinit var dataDao: NumberDao
 
-    private lateinit var numberDao: NumberDao
+    companion object {
+        const val AUTHORITY = "com.example.zad1.provider"
+        const val TAG = "content_provider"
+        private val uriMatcher = UriMatcher(UriMatcher.NO_MATCH)
+    }
+
+    init {
+        Log.d(TAG, "ContentProvider initialization")
+        // to access whole table
+        uriMatcher.addURI(
+            AUTHORITY,
+            "data",
+            0
+        )
+    }
 
     override fun onCreate(): Boolean {
         val db = Room.databaseBuilder(
@@ -21,48 +35,51 @@ class NumberProvider : ContentProvider() {
             AppDatabase::class.java, "number-database"
         ).build()
 
-        numberDao = db.numberDao()
-
+        dataDao = db.numberDao()
         return true
     }
 
     override fun query(
-        uri: Uri,
-        projection: Array<String>?,
-        selection: String?,
-        selectionArgs: Array<String>?,
-        sortOrder: String?
+        uri: Uri, projection: Array<String>?, selection: String?,
+        selectionArgs: Array<String>?, sortOrder: String?
     ): Cursor {
-        var cursor = MatrixCursor(arrayOf("id", "username", "counter"))
+        Log.d(TAG, "Query incoming...")
+        val cursor = MatrixCursor(arrayOf("uid", "username", "counter"))
 
-        runBlocking {
-            val data = numberDao.getAll()
-            data.forEach {
-                cursor.addRow(arrayOf(it.uid, it.username, it.counter))
+        when (uriMatcher.match(uri)) {
+            0 -> {
+                val data = dataDao.getAll()
+                Log.d(TAG, "Response to the query: $data")
+                data.forEach {
+                    cursor.addRow(arrayOf(it.uid, it.username, it.counter))
+                }
             }
+
+            else -> throw IllegalArgumentException("Unknown URI: $uri")
         }
 
         return cursor
     }
 
-    override fun insert(uri: Uri, values: ContentValues?): Uri? {
-        throw UnsupportedOperationException("Not yet implemented")
-    }
-
-    override fun update(
-        uri: Uri,
-        values: ContentValues?,
-        selection: String?,
-        selectionArgs: Array<String>?
-    ): Int {
-        throw UnsupportedOperationException("Not yet implemented")
-    }
-
     override fun delete(uri: Uri, selection: String?, selectionArgs: Array<String>?): Int {
-        throw UnsupportedOperationException("Not yet implemented")
+        TODO("Implement this to handle requests to delete one or more rows")
     }
 
     override fun getType(uri: Uri): String? {
-        throw UnsupportedOperationException("Not yet implemented")
+        TODO(
+            "Implement this to handle requests for the MIME type of the data" +
+                    "at the given URI"
+        )
+    }
+
+    override fun insert(uri: Uri, values: ContentValues?): Uri? {
+        TODO("Implement this to handle requests to insert a new row.")
+    }
+
+    override fun update(
+        uri: Uri, values: ContentValues?, selection: String?,
+        selectionArgs: Array<String>?
+    ): Int {
+        TODO("Implement this to handle requests to update one or more rows.")
     }
 }
